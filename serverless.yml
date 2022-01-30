@@ -1,0 +1,49 @@
+service: xml-uploadind-service
+
+plugins:
+  - serverless-bundle
+  - serverless-pseudo-parameters
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  memorySize: 256
+  region: us-east-1
+  stage: ${opt:stage, 'dev'}
+  environment:
+    KITCO_BUCKET_NAME: ${self:custom.KitcoBucket.name}
+  iamRoleStatements:
+    - ${file(iam/KitcoBucketIAM.yml):KitcoBucketIAM}
+
+resources:
+  Resources:
+    KitcoBucket: ${file(resources/KitcoBucket.yml):KitcoBucket}
+    KitcoBucketPolicy: ${file(resources/KitcoBucket.yml):KitcoBucketPolicy}
+  
+functions:
+  uploadXmlFile:
+    handler: src/handlers/uploadXmlFile.handler
+    events:
+      - http:
+          method: POST
+          path: /upload
+    timeout: 10
+
+  filesInBucket:
+    handler: src/handlers/filesInBucket.handler
+    events:
+      - s3:
+          bucket: ${self:custom.KitcoBucket.name}
+          existing: true
+          event: s3:ObjectCreated:*
+
+    timeout: 10
+        
+    
+
+
+custom:
+  KitcoBucket:
+    name: kitco-bucket-test1234-${self:provider.stage}
+  bundle:
+    linting: false

@@ -1,0 +1,26 @@
+{
+  "name": "xml-uploadind-service",
+  "version": "1.0.0",
+  "description": "Codingly template for Serverless Framework projects",
+  "author": "Ariel Weinberger <ariel@codingly.io>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.3",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "serverless-bundle": "^5.2.0",
+    "serverless-pseudo-parameters": "^2.6.1",
+    "webpack": "^5.67.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1065.0",
+    "axios": "^0.25.0",
+    "fs": "0.0.1-security",
+    "http-errors": "^2.0.0",
+    "js2xmlparser": "^4.0.2",
+    "jsontoxml": "^1.0.1",
+    "request": "^2.88.2"
+  }
+}
